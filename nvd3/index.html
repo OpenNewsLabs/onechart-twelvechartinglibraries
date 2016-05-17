@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/novus/nvd3/v1.8.1/build/nv.d3.css">
+<script type="text/javascript" src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="https://cdn.rawgit.com/novus/nvd3/v1.8.1/build/nv.d3.min.js"></script>
+
+</head>
+<body>
+	<svg id="chart" style="width:1000; height:600;"></svg>
+</body>
+
+<script type="text/javascript">
+
+  //create an empty data structure that nv3d requires
+	d3.csv("data.csv", function(error, data){
+    var exampleData = [
+    	{
+    		key: "totals",
+    		values: []
+    	}
+    ];
+
+  //fill that data structure with data from the csv
+  //x, y and size don't need to be defined when building
+  //the chart down there, nvd3 looks for values with these
+  //names and automatically assigns them to the axises.
+  data.forEach(function (d){
+  	d.y = +d.health
+    d.x = +d.income
+    d.size = +d.population
+  	exampleData[0].values.push(d) //push values to data structure
+  })
+
+ 	nv.addGraph(function() {
+
+   		var chart = nv.models.scatter() //define that it's a scatterplot
+          .xScale( d3.scale.log() ) //log scale
+          .pointRange([10, 5000]) //define bubble sizes
+          .color(['black']); //set color
+
+ 	  	d3.select('#chart') //select the div in which the chart should be plotted
+    			.datum(exampleData)
+       		.call(chart);
+
+      //plot the chart
+   		return chart;
+ 	});
+ });
+
+</script>
+</html>

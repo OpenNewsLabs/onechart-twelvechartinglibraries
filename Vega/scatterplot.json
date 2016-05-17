@@ -1,0 +1,87 @@
+{
+  "width": 1000,
+  "height": 500,
+  "data": [
+    {
+      "name": "data",
+      "url": "data.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "income": "number"
+        }
+      }
+    }
+  ],
+  "scales": [
+    {
+      "name": "xscale",
+      "type": "log",
+      "domain": {
+        "data": "data",
+        "field": ["income"]
+      },
+      "range": "width",
+      "nice": true,
+      "zero": true
+    },
+    {
+      "name": "yscale",
+      "type": "linear",
+      "domain": {
+        "data": "data",
+        "field": ["health"]
+      },
+      "range": "height",
+      "zero": false
+    },
+    {
+      "name": "size",
+      "type": "linear",
+      "domain": {
+        "data": "data",
+        "field": "population"
+      },
+      "range": [0,700]
+    }
+  ],
+  "axes": [
+    {
+      "type": "x",
+      "scale": "xscale",
+      "orient": "bottom"
+    },
+    {
+      "type": "y",
+      "scale": "yscale",
+      "orient": "left"
+    }
+  ],
+  "marks": [
+    {
+      "type": "symbol",
+      "from": {
+        "data": "data"
+      },
+      "properties": {
+        "enter": {
+          "x": {
+            "field": "income",
+            "scale": "xscale"
+          },
+          "y": {
+            "field": "health",
+            "scale": "yscale"
+          },
+          "size": {
+            "field":"population",
+            "scale":"size",
+            "shape":"cross"
+          },
+          "fill": {"value": "#000"},
+          "opacity": {"value": 0.6}
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  <script src="http://vega.github.io/vega/vega.js"></script>
+  <script src="http://vega.github.io/vega-lite/vega-lite.js"></script>
+  <script src="http://vega.github.io/vega-editor/vendor/vega-embed.js" charset="utf-8"></script>
+</head>
+<body>
+
+  <div id="chart"></div>
+
+  <script>
+  var vlSpec = {
+    "data": {"url": "data.csv", "formatType": "csv"},
+    "mark": "circle",
+    "encoding": {
+      "y": {
+        "field": "health",
+        "type": "quantitative",
+        "scale": {"zero": false}
+      },
+      "x": {
+        "field": "income",
+        "type": "quantitative",
+        "scale": {"type": "log"}
+      },
+      "size": {
+        "field": "population",
+        "type": "quantitative"
+      },
+      "color": {"value": "#000"}
+    }
+  }
+
+  var embedSpec = {
+    mode: "vega-lite",  // Instruct Vega-Embed to use the Vega-Lite compiler
+    spec: vlSpec
+  };
+
+  // Embed the visualization in the container with id `vis`
+  vg.embed("#chart", embedSpec, function(error, result) {
+  });
+  </script>
+</body>
+</html>

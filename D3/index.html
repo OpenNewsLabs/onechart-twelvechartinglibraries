@@ -1,0 +1,61 @@
+<!-- mostly followed this example:
+http://bl.ocks.org/weiglemc/6185069 -->
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+
+    circle {
+      fill: black;
+      opacity:0.7;
+    }
+
+    </style>
+    <script type="text/javascript" src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+
+    // load data
+    var data = d3.csv("data.csv", function(error, data) {
+
+      // change string (from CSV) into number format
+      data.forEach(function(d) {
+        d.health = +d.health;
+        d.income = Math.log(+d.income);
+        d.population = +d.population;
+        console.log(d.population, Math.sqrt(d.population))
+      });
+
+    var x = d3.scale.linear()
+      .domain([0, d3.max(data, function(d) {return d.income;})])
+      .range([0, 1000]);
+
+    var y = d3.scale.linear()
+      .domain([d3.min(data, function(d) {return d.health;}), d3.max(data, function(d) {return d.health; })])
+      .range([500, 0]);
+
+    var size = d3.scale.linear()
+      .domain([d3.min(data, function(d) {return d.population;}), d3.max(data, function(d) {return d.population; })])
+      .range([2, 40]);
+
+    var chart = d3.select("body")
+    	.append("svg:svg")
+    	.attr("width", 1000)
+    	.attr("height", 500)i
+
+    // draw the bubbles
+    var g = chart.append("svg:g");
+    g.selectAll("scatter-dots")
+      .data(data)
+      .enter().append("svg:circle")
+          .attr("cx", function(d,i) {return x(d.income);})
+          .attr("cy", function(d) {return y(d.health);})
+          .attr("r", function(d) {return size(d.population);});
+});
+
+    </script>
+  </body>
+</html>

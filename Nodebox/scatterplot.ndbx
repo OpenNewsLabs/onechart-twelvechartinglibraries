@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="21" type="file" uuid="bdbe1aae-030a-49f1-b7a9-5bc9eb19f4a8">
+    <property name="canvasHeight" value="1000"/>
+    <property name="canvasWidth" value="1000"/>
+    <property name="canvasX" value="0"/>
+    <property name="canvasY" value="0"/>
+    <node name="root" prototype="core.network" renderedChild="colorize1">
+        <node name="colorize1" position="6.00,9.00" prototype="corevector.colorize">
+            <port name="fill" type="color" value="#000000ab"/>
+        </node>
+        <node name="divide1" position="7.00,4.00" prototype="math.divide">
+            <port name="value2" type="float" value="1.4E8"/>
+        </node>
+        <node name="ellipse1" position="6.00,7.00" prototype="corevector.ellipse"/>
+        <node name="import_csv1" position="4.00,1.00" prototype="data.import_csv">
+            <port name="file" type="string" value="/Users/lrost/Desktop/data.csv"/>
+        </node>
+        <node name="log1" position="4.00,4.00" prototype="math.log"/>
+        <node name="lookup1" position="1.00,3.00" prototype="data.lookup">
+            <port name="key" type="string" value="health"/>
+        </node>
+        <node name="lookup2" position="4.00,3.00" prototype="data.lookup">
+            <port name="key" type="string" value="income"/>
+        </node>
+        <node name="lookup3" position="7.00,3.00" prototype="data.lookup">
+            <port name="key" type="string" value="population"/>
+        </node>
+        <node name="make_point1" position="1.00,6.00" prototype="corevector.make_point"/>
+        <node name="multiply1" position="1.00,4.00" prototype="math.multiply">
+            <port name="value2" type="float" value="-1.0"/>
+        </node>
+        <node name="multiply2" position="4.00,5.00" prototype="math.multiply">
+            <port name="value2" type="float" value="10.0"/>
+        </node>
+        <conn input="lookup1.list" output="import_csv1"/>
+        <conn input="lookup2.list" output="import_csv1"/>
+        <conn input="lookup3.list" output="import_csv1"/>
+        <conn input="divide1.value1" output="lookup3"/>
+        <conn input="multiply1.value1" output="lookup1"/>
+        <conn input="make_point1.y" output="multiply1"/>
+        <conn input="log1.value" output="lookup2"/>
+        <conn input="multiply2.value1" output="log1"/>
+        <conn input="make_point1.x" output="multiply2"/>
+        <conn input="ellipse1.position" output="make_point1"/>
+        <conn input="ellipse1.width" output="divide1"/>
+        <conn input="ellipse1.height" output="divide1"/>
+        <conn input="colorize1.shape" output="ellipse1"/>
+    </node>
+</ndbx>
