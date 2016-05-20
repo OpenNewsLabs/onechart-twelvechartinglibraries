@@ -1,7 +1,6 @@
 import leather
 import math
 import csv
-from operator import itemgetter
 
 chart = leather.Chart('Income vs. health')
 
